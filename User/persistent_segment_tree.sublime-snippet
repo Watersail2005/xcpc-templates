@@ -1,0 +1,58 @@
+<snippet>
+	<content><![CDATA[
+struct t1
+{
+	int l,r,v;
+	long long sum;
+	t1()
+	{
+		l=r=v=sum=0;
+	}
+}t[500000*21+10];
+int root[500005],tot;
+int insert(int q,int l,int r,int x)
+{
+	int p=++tot;
+	t[p]=t[q];
+	if(l==r)
+	{
+		t[p].v++;
+		t[p].sum+=x;
+		return p;
+	}
+	int mid=(l+r)>>1;
+	if(x<=mid)
+	{
+		t[p].l=insert(t[q].l,l,mid,x);
+	}
+	else
+	{
+		t[p].r=insert(t[q].r,mid+1,r,x);
+	}
+	t[p].v=t[t[p].l].v+t[t[p].r].v;
+	t[p].sum=t[t[p].l].sum+t[t[p].r].sum;
+	return p;
+}
+int ask(int p,int q,int l,int r,int k)
+{
+	if(l==r)
+	{
+		return l;
+	}
+	int mid=(l+r)>>1;
+	int lcnt=t[t[q].l].v-t[t[p].l].v;
+	if(k<=lcnt)
+	{
+		return ask(t[p].l,t[q].l,l,mid,k);
+	}
+	else
+	{
+		return ask(t[p].r,t[q].r,mid+1,r,k-lcnt);
+	}
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>pst</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>source.c++</scope>
+</snippet>

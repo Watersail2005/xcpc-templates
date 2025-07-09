@@ -1,0 +1,33 @@
+<snippet>
+	<content><![CDATA[
+void topsort()
+{
+	queue<int>q;
+	for(int i=1;i<=n;i++)
+	{
+		if(d[i]==0)
+		{
+			q.push(i);
+		}
+	}
+	while(q.size())
+	{
+		int n1=q.front();
+		q.pop();
+		for(int i=0;i<a[n1].size();i++)
+		{
+			${1:}
+			d[a[n1][i]]--;
+			if(d[a[n1][i]]==0)
+			{
+				q.push(a[n1][i]);
+			}
+		}
+	}
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>top</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>source.c++</scope>
+</snippet>

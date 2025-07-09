@@ -1,0 +1,16 @@
+<snippet>
+	<content><![CDATA[
+int get(int x)
+{
+	if(fa[x]==x)
+	{
+		return x;
+	}
+	return fa[x]=get(fa[x]);
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>get</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>source.c++</scope>
+</snippet>

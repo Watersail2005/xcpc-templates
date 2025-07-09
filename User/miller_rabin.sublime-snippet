@@ -1,0 +1,61 @@
+<snippet>
+	<content><![CDATA[
+long long power(long long a,long long b,long long p)
+{
+    if(b==0)
+    {
+        return 1%p;
+    }
+    else if(b%2==0)
+    {
+        __int128_t tmp=power(a,b/2,p);
+        return tmp*tmp%p;
+    }
+    else
+    {
+        __int128_t tmp=power(a,b/2,p);
+        return tmp*tmp%p*a%p;
+    }
+}
+bool millerRabin(long long n)
+{
+    if(n==2)
+    {
+        return true;
+    }
+    if(n==1||n%2==0)
+    {
+        return false;
+    }
+    for(int T=1;T<=8;T++)
+    {
+        long long a=rand()%(n-2)+2;
+        long long m=n-1;
+        int q=0;
+        while(m%2==0)
+        {
+            m/=2;
+            q++;
+        }
+        __int128_t x=power(a,m,n);
+        for(int i=1;i<=q;i++)
+        {
+            if(x!=1&&x!=(n-1)&&x*x%n==1)
+            {
+                return false;
+            }
+            x=x*x%n;
+        }
+        if(x!=1)
+        {
+            return false;
+        }
+    }
+    return true;
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>mil</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>source.c++</scope>
+</snippet>

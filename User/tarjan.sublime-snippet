@@ -1,0 +1,40 @@
+<snippet>
+	<content><![CDATA[
+typedef pair<int,int> pii;
+vector<int>a[500005];
+vector<pii>q[500005];
+int fa[500005],ans[500005],id[500005];
+int get(int x)
+{
+	if(fa[x]==x)
+	{
+		return x;
+	}
+	return fa[x]=get(fa[x]);
+}
+void tarjan(int u,int f)
+{
+	id[u]=1;
+	for(int v:a[u])
+	{
+		if(v!=f)
+		{
+			tarjan(v,u);
+		}
+	}
+	id[u]=2;
+	for(auto [v,i]:q[u])
+	{
+		if(id[v]==2)
+		{
+			ans[i]=get(v);
+		}
+	}
+	fa[u]=get(f);
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>tarjan</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>source.c++</scope>
+</snippet>

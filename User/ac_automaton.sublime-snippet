@@ -1,0 +1,68 @@
+<snippet>
+	<content><![CDATA[
+int t[1000005][26],fail[1000005],tot;
+vector<int>id[1000005];
+bool ans[1000005];
+void insert(string s,int tag)
+{
+	int p=0;
+	for(int i=0;i<s.size();i++)
+	{
+		if(t[p][s[i]-'a']==0)
+		{
+			t[p][s[i]-'a']=++tot;
+		}
+		p=t[p][s[i]-'a'];
+	}
+	id[p].push_back(tag);
+}
+int q[1000005],l=1,r;
+void pre()
+{
+	for(int i=0;i<26;i++)
+	{
+		if(t[0][i])
+		{
+			q[++r]=t[0][i];
+		}
+	}
+	while(l<=r)
+	{
+		int n1=q[l++];
+		for(int i=0;i<26;i++)
+		{
+			if(t[n1][i]==0)
+			{
+				t[n1][i]=t[fail[n1]][i];
+			}
+			else
+			{
+				fail[t[n1][i]]=t[fail[n1]][i];
+				q[++r]=t[n1][i];
+			}
+		}
+	}
+}
+void solve(string s)
+{
+	int p=0;
+	for(int i=0;i<s.size();i++)
+	{
+		p=t[p][s[i]-'a'];
+		int q=p;
+		while(q)
+		{
+			for(int j=0;j<id[q].size();j++)
+			{
+				ans[id[q][j]]=true;
+			}
+			q=fail[q];
+		}
+	}
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>aca</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>source.c++</scope>
+</snippet>

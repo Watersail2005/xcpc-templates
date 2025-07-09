@@ -1,0 +1,69 @@
+<snippet>
+	<content><![CDATA[
+const signed P=10;
+vector<int>a[1000000],b[1000000];//正向建图和反向建图
+int ans[1000000],cnt[1000000];//0表示会陷入循环，1表示先手必胜，2表示先手必败
+void add(int u,int v)
+{
+	a[u].push_back(v);
+	b[v].push_back(u);
+}
+int enc(vector<int>st)
+{
+	int res=0;
+	for(int x:st)
+	{
+		res=res*P+x;
+	}
+	return res;
+}
+void solve()
+{
+	queue<int>q;
+	ans[enc({})]=2;//终止状态为必败态
+	q.push(enc({}));
+	for(int i=0;i<10;i++)
+	{
+		for(int j=0;j<10;j++)
+		{
+			for(int k=0;k<10;k++)
+			{
+				for(int l=0;l<10;l++)
+				{
+					int u=enc({i,j,k,l});
+				}
+			}
+		}
+	}
+	while(q.size())
+	{
+		int u=q.front();
+		q.pop();
+		for(int v:b[u])
+		{
+			if(ans[u]==2)
+			{
+				if(ans[v]==0)
+				{
+					ans[v]=1;
+					q.push(v);
+				}
+			}
+			else
+			{
+				cnt[v]++;
+				if(cnt[v]==a[v].size())
+				{
+					ans[v]=2;
+					q.push(v);
+				}
+			}
+		}
+	}
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>gt</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>source.c++</scope>
+</snippet>

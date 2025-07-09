@@ -1,0 +1,38 @@
+<snippet>
+	<content><![CDATA[
+const signed mod=998244353;
+typedef vector<int> poly;
+void FWTxor(poly &f,int type)
+{
+	for(int x=2;x<=f.size();x<<=1)
+	{
+		int k=(x>>1);
+		for(int i=0;i<f.size();i+=x)
+		{
+			for(int j=0;j<k;j++)
+			{
+				(f[i+j]+=f[i+j+k])%=mod;
+				f[i+j+k]=(f[i+j]-f[i+j+k]*2)%mod;
+				(f[i+j]*=type)%=mod;
+				(f[i+j+k]*=type)%=mod;
+			}
+		}
+	}
+}
+poly operator^(poly a,poly b)
+{
+	FWTxor(a,1);
+	FWTxor(b,1);
+	for(int i=0;i<a.size();i++)
+	{
+		(a[i]*=b[i])%=mod;
+	}
+	FWTxor(a,(mod+1)/2);
+	return a;
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>fwtx</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>source.c++</scope>
+</snippet>

@@ -1,0 +1,67 @@
+<snippet>
+	<content><![CDATA[
+int to[300005],e[300005],nx[300005],h[20005],cur[20005],tot=1;
+void add(int u,int v,int w)
+{
+	tot++;
+	to[tot]=v;
+	e[tot]=w;
+	nx[tot]=h[u];
+	h[u]=tot;
+}
+int s,t,flow;
+int d[20005];
+bool bfs()
+{
+	queue<int>q;
+	memset(d,0,sizeof(int)*(t-s+1));
+	q.push(s);
+	d[s]=1;
+	while(q.size())
+	{
+		int n1=q.front();
+		q.pop();
+		cur[n1]=h[n1];
+		for(int i=h[n1];i;i=nx[i])
+		{
+			int y=to[i];
+			if(!d[y]&&e[i])
+			{
+				d[y]=d[n1]+1;
+				q.push(y);
+			}
+		}
+	}
+	return d[t];
+}
+int dinic(int n1,int flow)
+{
+	if(n1==t)
+	{
+		return flow;
+	}
+	int rest=flow;
+	for(int i=cur[n1];i&&rest;i=nx[i])
+	{
+		cur[n1]=i;
+		int y=to[i];
+		if(e[i]&&d[y]==d[n1]+1)
+		{
+			int k=dinic(y,min(rest,e[i]));
+			if(k==0)
+			{
+				d[y]=0;
+			}
+			rest-=k;
+			e[i]-=k;
+			e[i^1]+=k;
+		}
+	}
+	return flow-rest;
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>din</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>source.c++</scope>
+</snippet>

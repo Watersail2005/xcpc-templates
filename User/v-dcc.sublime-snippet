@@ -1,0 +1,85 @@
+<snippet>
+	<content><![CDATA[
+int to[2000005],nx[2000005],h[500005];
+vector<int>a[1000005],dcc[500005];
+int cnt,num,tot,dfn[500005],low[500005],id[500005];
+bool cut[500005];
+stack<int>s;
+void add(int u,int v)
+{
+	to[++tot]=v;
+	nx[tot]=h[u];
+	h[u]=tot;
+}
+void tarjan(int n1)
+{
+	dfn[n1]=low[n1]=++tot;
+	s.push(n1);
+	if(n1==1&&h[n1]==0)
+	{
+		cnt++;
+		dcc[cnt].push_back(n1);
+	}
+	int tmp=0;
+	for(int i=h[n1];i;i=nx[i])
+	{
+		int y=to[i];
+		if(!dfn[y])
+		{
+			tarjan(y);
+			low[n1]=min(low[n1],low[y]);
+			if(dfn[n1]<=low[y])
+			{
+				tmp++;
+				if(n1!=1||tmp>=2)
+				{
+					cut[n1]=true;
+				}
+				cnt++;
+				while(s.top()!=y)
+				{
+					dcc[cnt].push_back(s.top());
+					s.pop();
+				}
+				dcc[cnt].push_back(y);
+				s.pop();
+				dcc[cnt].push_back(n1);
+			}
+		}
+		else
+		{
+			low[n1]=min(low[n1],dfn[y]);
+		}
+	}
+}
+tot=0;
+tarjan(1);
+num=cnt;
+for(int i=1;i<=n;i++)
+{
+	if(cut[i])
+	{
+		id[i]=++num;
+	}
+}
+for(int i=1;i<=cnt;i++)
+{
+	for(int j=0;j<dcc[i].size();j++)
+	{
+		if(cut[dcc[i][j]])
+		{
+			a[i].push_back(id[dcc[i][j]]);
+			a[id[dcc[i][j]]].push_back(i);
+		}
+		else
+		{
+			id[dcc[i][j]]=i;
+		}
+	}
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>vdcc</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>source.c++</scope>
+</snippet>

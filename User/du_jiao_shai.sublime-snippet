@@ -1,0 +1,31 @@
+<snippet>
+	<content><![CDATA[
+unordered_map<int,int>qmiu;
+int Smiu(int n)
+{
+	if(n<=10000000)
+	{
+		return smiu[n];
+	}
+	else if(qmiu.find(n)!=qmiu.end())
+	{
+		return qmiu[n];
+	}
+	else
+	{
+		int ans=1;
+		for(int d=2;d<=n;d++)
+		{
+			int p=n/(n/d);
+			ans=ans-(p-d+1)*Smiu(n/d);
+			d=p;
+		}
+		return qmiu[n]=ans;
+	}
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>du</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>source.c++</scope>
+</snippet>

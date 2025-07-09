@@ -1,0 +1,28 @@
+<snippet>
+	<content><![CDATA[
+int st[100005][20];
+void st_pre(int n)
+{
+	for(int i=1;i<=n;i++)
+	{
+		st[i][0]=${1:};
+	}
+	for(int i=1;i<=31-__builtin_clz(n);i++)
+	{
+		for(int j=1;j+(1<<i)-1<=n;j++)
+		{
+			st[j][i]=max(st[j][i-1],st[j+(1<<(i-1))][i-1]);
+		}
+	}
+}
+int ask(int l,int r)
+{
+	int k=31-__builtin_clz(r-l+1);
+	return max(st[l][k],st[r-(1<<k)+1][k]);
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>stt</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>source.c++</scope>
+</snippet>

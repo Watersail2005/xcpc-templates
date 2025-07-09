@@ -1,0 +1,36 @@
+<snippet>
+	<content><![CDATA[
+struct my_hash
+{
+	static int splitmix64(int x)
+	{
+		x += 0x9e3779b97f4a7c15;
+	    x = (x ^ (x >> 30)) * 0xbf58476d1ce4e5b9;
+	    x = (x ^ (x >> 27)) * 0x94d049bb133111eb;
+	    return x ^ (x >> 31);
+	}
+	size_t operator()(int x) const
+	{
+	    static const int FIXED_RANDOM = chrono::steady_clock::now().time_since_epoch().count();
+	    return splitmix64(x + FIXED_RANDOM);
+	}
+	size_t operator()(pair<int, int> x) const
+	{
+	    static const int FIXED_RANDOM = chrono::steady_clock::now().time_since_epoch().count();
+	    return splitmix64(x.first + FIXED_RANDOM) ^ (splitmix64(x.second + FIXED_RANDOM) >> 1);
+	}
+	//()运算符被称为函数调用运算符。C++允许类重载()运算符，从而使类对象可以像函数一样被调用。
+	/*
+	std::chrono::steady_clock 是 C++ 标准库中的一个时钟类
+	steady_clock::now() 返回一个表示当前时间点的对象
+	time_since_epoch() 是 time_point 的成员函数，返回一个 duration 对象，
+	表示当前时间点与时钟起点（epoch，即“纪元”时间）的时间间隔。
+	count() 是 std::chrono::duration 类的成员函数，用于获取时间间隔的数值。
+	*/
+};
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>myh</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>source.c++</scope>
+</snippet>

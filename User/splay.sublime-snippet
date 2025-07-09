@@ -1,0 +1,176 @@
+<snippet>
+	<content><![CDATA[
+int root;
+struct t1
+{
+	int fa,s[2];
+	int va,size;
+	long long sum;
+	t1()
+	{
+		fa=s[0]=s[1]=0;
+		va=size=sum=0;
+	}
+}t[500005];
+bool get(int x)
+{
+	return x==t[t[x].fa].s[1];
+}
+void maintain(int x)
+{
+	t[x].sum=t[t[x].s[0]].sum+t[t[x].s[1]].sum+t[x].va;
+	t[x].size=t[t[x].s[0]].size+t[t[x].s[1]].size+1;
+}
+void rotate(int x)
+{
+	int y=t[x].fa,z=t[y].fa,opt=get(x);
+	t[y].s[opt]=t[x].s[opt^1];
+	if(t[x].s[opt^1])
+	{
+		t[t[x].s[opt^1]].fa=y;
+	}
+	t[x].s[opt^1]=y;
+	t[y].fa=x;
+	t[x].fa=z;
+	if(z)
+	{
+		t[z].s[y==t[z].s[1]]=x;
+	}
+	maintain(y);
+	maintain(x);
+}
+void update(int x)
+{
+	maintain(x);
+	if(t[x].fa)
+	{
+		update(t[x].fa);
+	}
+}
+void Splay(int x,int k)
+{
+	update(x);
+	while(t[x].fa!=k)
+	{
+		int y=t[x].fa,z=t[y].fa;
+		if(z!=k)
+		{
+			if(get(x)==get(y))
+			{
+				rotate(y);
+			}
+			else
+			{
+				rotate(x);
+			}
+		}
+		rotate(x);
+	}
+	if(!k)
+	{
+		root=x;
+	}
+}
+void output(int p)
+{
+	if(!p)
+	{
+		return;
+	}
+	output(t[p].s[0]);
+	cout<<" "<<t[p].va;
+	output(t[p].s[1]);
+}
+int rnk(int p,int va)
+{
+	if(t[t[p].s[0]].size==va-1)
+	{
+		return p;
+	}
+	else if(t[t[p].s[0]].size<va-1)
+	{
+		return rnk(t[p].s[1],va-t[t[p].s[0]].size-1);
+	}
+	else
+	{
+		return rnk(t[p].s[0],va);
+	}
+}
+long long ask(int p)
+{
+	Splay(rnk(root,1),0);
+	Splay(rnk(root,p+2),rnk(root,1));
+	return t[t[rnk(root,p+2)].s[0]].sum;
+}
+void insert(int x)
+{
+	int p=root;
+	while(p)
+	{
+		if(t[x].va>t[p].va)
+		{
+			if(!t[p].s[1])
+			{
+				t[p].s[1]=x;
+				t[x].fa=p;
+				Splay(x,0);
+				return;
+			}
+			p=t[p].s[1];
+		}
+		else
+		{
+			if(!t[p].s[0])
+			{
+				t[p].s[0]=x;
+				t[x].fa=p;
+				Splay(x,0);
+				return;
+			}
+			p=t[p].s[0];
+		}
+	}
+}
+int pre()
+{
+	int cur=t[root].s[0];
+	while(t[cur].s[1])
+	{
+		cur=t[cur].s[1];
+	}
+	Splay(cur,0);
+	return cur;
+}
+int merge(int x,int y)
+{
+	if(!x)
+	{
+		return y;
+	}
+	if(!y)
+	{
+		return x;
+	}
+	int p=pre();
+	t[p].s[1]=y;
+	t[y].fa=p;
+	maintain(p);
+	return p;
+}
+void clear(int x)
+{
+	t[x].fa=t[x].s[0]=t[x].s[1]=t[x].sum=t[x].size=0;
+}
+void erase(int x)
+{
+	Splay(x,0);
+	t[t[x].s[0]].fa=t[t[x].s[1]].fa=0;
+	root=merge(t[x].s[0],t[x].s[1]);
+	clear(x);
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>spl</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>source.c++</scope>
+</snippet>

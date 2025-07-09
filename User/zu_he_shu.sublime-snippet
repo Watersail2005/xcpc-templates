@@ -1,0 +1,44 @@
+<snippet>
+	<content><![CDATA[
+const signed mod=998244353;
+int power(int n,int p)
+{
+	if(p==0)
+	{
+		return 1;
+	}
+	long long tmp=power(n,p/2);
+	if(p%2==1)
+	{
+		return tmp*tmp%mod*n%mod;
+	}
+	return tmp*tmp%mod;
+}
+long long jc[1000005],jcinv[1000005];
+void pre()
+{
+	jc[0]=1;
+	for(int i=1;i<=1000000;i++)
+	{
+		jc[i]=jc[i-1]*i%mod;
+	}
+	jcinv[1000000]=power(jc[1000000],mod-2);
+	for(int i=1000000-1;i>=0;i--)
+	{
+		jcinv[i]=jcinv[i+1]*(i+1)%mod;
+	}
+}
+long long c(int n,int m)
+{
+	if(m>n)
+	{
+		return 0;
+	}
+	return jc[n]*jcinv[m]%mod*jcinv[n-m]%mod;
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>zhs</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>source.c++</scope>
+</snippet>

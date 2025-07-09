@@ -1,0 +1,36 @@
+<snippet>
+	<content><![CDATA[
+vector<int>z[500005];
+int get_cycle(int u)
+{
+	bool f=true;
+	vis[u]=true;
+	for(int i=h[u];i;i=nx[i])
+	{
+		int v=to[i];
+		if(b[i]==false)
+		{
+			b[i]=b[i^1]=true;
+			if(vis[v]==false)
+			{
+				int tmp=get_cycle(v);
+				if(tmp>0)
+				{
+					c[u]==tmp? f=false:c[u]=tmp;
+				}
+			}
+			else
+			{
+				c[u]=c[v]=++m;//标记入环节点以限制回溯
+			}
+		}
+	}
+	z[c[u]].push_back(u);
+	return (f==true)*c[u];
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>cyt</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>source.c++</scope>
+</snippet>

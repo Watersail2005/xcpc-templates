@@ -1,0 +1,50 @@
+<snippet>
+	<content><![CDATA[
+vector<int>A[500005],la;
+int s[500005],tot;
+void build(vector<int>key)
+{
+	auto cmp=[](int a,int b)
+	{
+		return dfn[a]<dfn[b];
+	};
+	for(int u:la)
+	{
+		A[u].clear();
+	}
+	la={1};
+	sort(key.begin(),key.end(),cmp);
+	s[1]=tot=1;
+	for(int u:key)
+	{
+		int l=lca(u,s[tot]);
+		if(l==s[tot])
+		{
+			s[++tot]=u;
+		}
+		else
+		{
+			while(dfn[l]<dfn[s[tot-1]])
+			{
+				add(s[tot-1],s[tot]);
+				tot--;
+			}
+			add(l,s[tot--]);
+			if(s[tot]!=l)
+			{
+				s[++tot]=l;
+			}
+			s[++tot]=u;
+		}
+	}
+	for(int i=1;i<tot;i++)
+	{
+		add(s[i],s[i+1]);
+	}
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>vt</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>source.c++</scope>
+</snippet>

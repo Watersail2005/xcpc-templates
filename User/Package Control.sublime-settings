@@ -1,0 +1,30 @@
+{
+	"bootstrapped": true,
+	"in_process_packages":
+	[
+	],
+	"installed_packages":
+	[
+		"0x0",
+		"10% Too Dull for My Tastes Color Scheme",
+		"Atomic Color Scheme",
+		"ayu",
+		"BracketHighlighter",
+		"ChineseLocalizations",
+		"ConvertToUTF8",
+		"CppFastOlympicCoding",
+		"Default File Type",
+		"GitHub Theme",
+		"Hopscotch Color Scheme",
+		"MarkdownLight",
+		"Material Theme",
+		"Monokai++",
+		"Package Control",
+		"PackageResourceViewer",
+		"Print to HTML",
+		"Theme - Darkmatter",
+		"Theme - Monokai+",
+		"Theme - Soda",
+		"White Night Color Scheme",
+	],
+}

@@ -1,0 +1,63 @@
+<snippet>
+	<content><![CDATA[
+//SAM中的每个非初始状态都对应一个或多个endpos相同的非空子串
+//后缀链接连接到的状态对应于后缀中与它的endpos集合不同且最长的那个
+//SAM 本身可以看作是字符串全体后缀的 AC 自动机的压缩版本
+struct t1
+{
+	int link;
+	long long len,cnt;
+	map<char,int>q;
+	t1()
+	{
+		link=-1;
+		len=cnt=0;
+	}
+}t[2000005];//状态数上限为2n-1
+int tot,la;
+void add(char c)
+{
+	t[++tot].len=t[la].len+1;
+	t[tot].cnt=1;
+	int cur=la;
+	la=tot;
+	while(t[cur].q.find(c)==t[cur].q.end())
+	{
+		t[cur].q[c]=tot;
+		if(cur==0)
+		{
+			t[tot].link=0;
+			return;//情况一：所有状态都不存在到当前字符的转移
+		}
+		cur=t[cur].link;
+	}
+	int p=cur,q=t[p].q[c];
+	cur=tot;
+	if(t[q].len==t[p].len+1)
+	{
+		t[cur].link=q;
+		return;//情况二：q完全继承了p
+	}
+	tot++;
+	int cl=tot;
+	t[cl]=t[q];
+	t[cl].cnt=0;
+	t[cl].len=t[p].len+1;
+	t[q].link=cl;
+	t[cur].link=cl;
+	while(p!=-1)
+	{
+		if(t[p].q[c]==q)
+		{
+			t[p].q[c]=cl;
+		}
+		p=t[p].link;
+	}
+	//情况三：q部分继承了p，需要分裂节点q
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>sam</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>source.c++</scope>
+</snippet>

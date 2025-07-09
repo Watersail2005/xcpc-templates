@@ -1,0 +1,37 @@
+<snippet>
+	<content><![CDATA[
+int y[1000005];
+int s[1000005],jc[1000005];
+int t[1000005];
+const int mod=1000000007;
+int lagrange(int m,int k)
+{
+	s[0]=jc[0]=1;
+	for(int i=1;i<=m;i++)
+	{
+		s[i]=s[i-1]*(k-i)%mod;
+		jc[i]=jc[i-1]*i%mod;
+	}
+	t[m+1]=1;
+	for(int i=m;i>=1;i--)
+	{
+		t[i]=t[i+1]*(k-i)%mod;
+	}
+	int ans=0;
+	for(int i=1;i<=m;i++)
+	{
+		int p=s[i-1]*t[i+1]%mod,q=jc[m-i]*jc[i-1]%mod;
+		if((m-i)%2==1)
+		{
+			q=-q;
+		}
+		ans=(ans+y[i]*p%mod*power(q,mod-2)%mod)%mod;
+	}
+	return ans;
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>lag</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>source.c++</scope>
+</snippet>

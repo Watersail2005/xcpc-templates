@@ -1,0 +1,31 @@
+<snippet>
+	<content><![CDATA[
+int dfn[1000005],low[1000005],tot;
+bool cut[1000005];
+void tarjan(int u,int fa)
+{
+	dfn[u]=low[u]=++tot;
+	for(int i=h[u];i;i=nx[i])
+	{
+		int v=to[i];
+		if(!dfn[v])
+		{
+			tarjan(v,i^1);
+			low[u]=min(low[u],low[v]);
+			if(dfn[u]<low[v])
+			{
+				cut[i]=cut[i^1]=true;
+			}
+		}
+		else if(i!=fa)
+		{
+			low[u]=min(low[u],dfn[v]);
+		}
+	}
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>cute</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>source.c++</scope>
+</snippet>

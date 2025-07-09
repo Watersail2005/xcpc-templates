@@ -1,0 +1,40 @@
+<snippet>
+	<content><![CDATA[
+int e[10000005],t[10000005][2],root[200005];
+int tot,cnt;
+void insert(int x)
+{
+	int p=root[cnt],q=root[++cnt]=++tot;
+	for(int i=30;i>=0;i--)
+	{
+        t[q][0]=t[p][0];
+        t[q][1]=t[p][1];
+		t[q][(x>>i)&1]=++tot;
+		p=t[p][(x>>i)&1];
+		q=t[q][(x>>i)&1];	
+		e[tot]=cnt;
+	}
+}
+int ask(int l,int r,int x)
+{
+	int cur=root[r],ans=0;
+	for(int i=30;i>=0;i--)
+	{
+		if(l<=e[t[cur][((x>>i)&1)^1]])
+		{
+			cur=t[cur][((x>>i)&1)^1];
+			ans+=(1<<i);
+		}
+		else
+		{
+			cur=t[cur][(x>>i)&1];
+		}
+	}
+	return ans;
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>ptr</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>source.c++</scope>
+</snippet>

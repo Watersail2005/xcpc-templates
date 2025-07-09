@@ -1,0 +1,61 @@
+<snippet>
+	<content><![CDATA[
+vector<int>a[10005],c[10005],d[10005];
+bool b[10005];
+int l[10005],pr1[10005],pr2[10005],flow;
+int s,t;
+void add(int u,int v,int w)
+{
+    a[u].push_back(v);
+    a[v].push_back(u);
+    c[u].push_back(w);
+    c[v].push_back(0);
+    d[u].push_back(a[v].size()-1);
+    d[v].push_back(a[u].size()-1);
+}
+void update()
+{
+    int p=t;
+    flow+=l[t];
+    while(p!=s)
+    {
+        c[pr1[p]][pr2[p]]-=l[t];
+        c[p][d[pr1[p]][pr2[p]]]+=l[t];
+        p=pr1[p];
+    }
+}
+bool bfs()
+{
+    queue<int>q;
+    memset(b,false,sizeof(b));
+    q.push(s);
+    l[s]=INT_MAX;
+    b[s]=true;
+    while(q.size())
+    {
+        int n1=q.front();
+        q.pop();
+        for(int i=0;i<a[n1].size();i++)
+        {
+            if(c[n1][i]&&!b[a[n1][i]])
+            {
+                b[a[n1][i]]=true;
+                l[a[n1][i]]=min(l[n1],c[n1][i]);
+                q.push(a[n1][i]);
+                pr1[a[n1][i]]=n1;
+                pr2[a[n1][i]]=i;
+                if(a[n1][i]==t)
+                {
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>ekb</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>source.c++</scope>
+</snippet>

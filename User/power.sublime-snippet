@@ -1,0 +1,22 @@
+<snippet>
+	<content><![CDATA[
+const int mod=${1:998244353};
+int power(int n,int p)
+{
+	if(p==0)
+	{
+		return 1;
+	}
+	long long tmp=power(n,p/2);
+	if(p%2==1)
+	{
+		return tmp*tmp%mod*n%mod;
+	}
+	return tmp*tmp%mod;
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>pow</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>source.c++</scope>
+</snippet>

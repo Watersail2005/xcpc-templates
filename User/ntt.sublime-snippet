@@ -1,0 +1,90 @@
+<snippet>
+	<content><![CDATA[
+const int mod=998244353;
+typedef vector<int> poly;
+int rev[5000005],p[5000005][2];
+int power(int n,int p)
+{
+	if(p==0)
+	{
+		return 1;
+	}
+	long long tmp=power(n,p/2);
+	if(p%2==1)
+	{
+		return tmp*tmp%mod*n%mod;
+	}
+	return tmp*tmp%mod;
+}
+void NTT(poly &f,int opt)
+{
+	int n=f.size();
+	for(int i=1;i<n;i++)
+	{
+		if(i<rev[i])
+		{
+			swap(f[i],f[rev[i]]);
+		}
+	}
+	for(int m=2;m<=n;m*=2)
+	{
+		int k=m/2;
+		for(int i=0;i<n;i+=m)
+		{
+			long long cur=1,step=p[m][opt];
+			for(int j=0;j<k;j++)
+			{
+				long long tmp=cur*f[i+j+k]%mod;
+				f[i+j+k]=(f[i+j]-tmp)%mod;
+				f[i+j]=(f[i+j]+tmp)%mod;
+				cur=cur*step%mod;
+			}
+		}
+	}
+}
+poly operator*(poly a,poly b)
+{
+	poly c(a.size()+b.size()-1);
+	int p=0;
+	while((1<<p)<c.size())
+	{
+		p++;
+	}
+	for(int i=1;i<(1<<p);i++)
+	{
+		rev[i]=(rev[i>>1]>>1);
+		if(i&1)
+		{
+			rev[i]+=(1<<(p-1));
+		}
+	}
+	c.resize(1<<p);
+	a.resize(c.size());
+	b.resize(c.size());
+	NTT(a,0),NTT(b,0);
+	for(int i=0;i<c.size();i++)
+	{
+		c[i]=a[i]*b[i]%mod;
+	}
+	NTT(c,1);
+	p=power(c.size(),mod-2);
+	for(int i=0;i<c.size();i++)
+	{
+		c[i]=c[i]*p%mod;
+	}
+	return c;
+}
+void pre()
+{
+	for(int i=1;i<=22;i++)
+	{
+		p[1<<i][0]=power(3,(mod-1)/(1<<i));
+		p[1<<i][1]=power(3,(mod-1)-(mod-1)/(1<<i));
+	}
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>ntt</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>source.c++</scope>
+</snippet>

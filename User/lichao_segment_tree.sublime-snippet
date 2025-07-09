@@ -1,0 +1,123 @@
+<snippet>
+	<content><![CDATA[
+/*
+通过李超线段树维护以下两个操作：
+1.在平面上加入一条线段
+2.给定一个数 k，询问与直线 x=k 相交的线段中，交点纵坐标最大的线段的编号
+若有多条线段与查询直线的交点纵坐标都是最大的，则输出编号最小的线段；
+对于一条x0=x1的线段，认为其与x=x0的交点为其两端点中纵坐标较大的端点
+*/
+const double eps=1e-9;
+const int mod1=39989;//定义域
+struct seg
+{
+	int x0,y0,x1,y1;
+	seg()
+	{
+		this->x0=1;
+		this->x1=mod1;
+		this->y0=0;
+		this->y1=0;
+	}
+	double calc(double x)
+	{
+		if(x0==x1)
+		{
+			return y1;
+		}
+		return y0+(x-x0)/(x1-x0)*(y1-y0);
+	}
+}s[100005];
+int tot;
+struct t1
+{
+	int l,r,v;
+}t[200005];
+void build(int p,int l,int r)
+{
+	t[p].l=l;
+	t[p].r=r;
+	t[p].v=0;
+	if(l==r)
+	{
+		return;
+	}
+	int mid=(l+r)>>1;
+	build(p*2,l,mid);
+	build(p*2+1,mid+1,r);
+}
+void change(int p,int l,int r,int x)
+{
+	int mid=(t[p].l+t[p].r)>>1;
+	if(l<=t[p].l&&r>=t[p].r)
+	{
+		if(fabs(s[x].calc(mid)-s[t[p].v].calc(mid))<eps&&x>t[p].v)
+		{
+			swap(x,t[p].v);
+		}
+		else if(s[x].calc(mid)<s[t[p].v].calc(mid))
+		{
+			swap(x,t[p].v);
+		}
+		if(fabs(s[x].calc(t[p].r)-s[t[p].v].calc(t[p].r))<eps&&t[p].v<x)
+		{
+			change(p*2+1,l,r,t[p].v);
+			t[p].v=x;
+		}
+		else if(s[x].calc(t[p].r)<s[t[p].v].calc(t[p].r))
+		{
+			change(p*2+1,l,r,t[p].v);
+			t[p].v=x;
+		}
+		else if(fabs(s[x].calc(t[p].l)-s[t[p].v].calc(t[p].l))<eps&&t[p].v<x)
+		{
+			change(p*2,l,r,t[p].v);
+			t[p].v=x;
+		}
+		else if(s[x].calc(t[p].l)<s[t[p].v].calc(t[p].l))
+		{
+			change(p*2,l,r,t[p].v);
+			t[p].v=x;
+		}
+		else
+		{
+			t[p].v=x;
+		}
+		return;
+	}
+	if(l<=mid)
+	{
+		change(p*2,l,r,x);
+	}
+	if(r>mid)
+	{
+		change(p*2+1,l,r,x);
+	}
+}
+int ask(int p,int x)
+{
+	if(t[p].l==t[p].r)
+	{
+		return t[p].v;
+	}
+	int mid=(t[p].l+t[p].r)>>1,va;
+	x<=mid? va=ask(p*2,x):va=ask(p*2+1,x);
+	if(fabs(s[t[p].v].calc(x)-s[va].calc(x))<eps)
+	{
+		return min(t[p].v,va);
+	}
+	else if(s[t[p].v].calc(x)>s[va].calc(x))
+	{
+		return t[p].v;
+	}
+	else
+	{
+		return va;
+	}
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>lcs</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>source.c++</scope>
+</snippet>

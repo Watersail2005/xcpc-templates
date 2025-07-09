@@ -1,0 +1,38 @@
+<snippet>
+	<content><![CDATA[
+//轮廓线DP
+/*
+采用三进制括号表示法
+正确性基于“两两匹配”，“不会交叉”的性质对所有的棋盘模型的问题都适用
+*/
+long long f[2][100105];
+bool opt;
+queue<int>q[2];
+int get(int state,int k)
+{
+	return (state>>(k*2))&3;
+}
+int Set(int k,int va)
+{
+	return va*(1<<(2*k));
+}
+void insert(int cur,int state,long long w)
+{
+	if(opt==true)
+	{
+		state=(state<<2);//在行末改变轮廓线状态
+	}
+	int t=find(cur,state);
+	if(h[cur][t]==-1)
+	{
+		h[cur][t]=state;
+		q[cur].push(t);
+	}
+	f[cur][t]+=w;
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>pdp</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>source.c++</scope>
+</snippet>

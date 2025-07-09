@@ -1,0 +1,29 @@
+<snippet>
+	<content><![CDATA[
+bool judge(pdd a,pdd b,pdd c,pdd d)
+{
+	if(!(max(a.first,b.first)>=min(c.first,d.first)&&max(c.first,d.first)>=min(a.first,b.first)))
+	{
+		return false;//两矩形x坐标不相交 
+	}
+	if(!(max(a.second,b.second)>=min(c.second,d.second)&&max(c.second,d.second)>=min(a.second,b.second)))
+	{
+		return false;//两矩形y坐标不相交  
+	}
+	//快速排斥实验
+	if(((c-a)*(d-a))*((c-b)*(d-b))<=0&&((a-c)*(b-c))*((a-d)*(b-d))<=0)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+	//跨立 要判两边 
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>dsi</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>source.c++</scope>
+</snippet>

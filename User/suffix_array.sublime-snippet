@@ -1,0 +1,80 @@
+<snippet>
+	<content><![CDATA[
+int sa[1000005],rk[21][1000005],r[1000005],w,h[1000005],n;
+struct t1
+{
+	char c;
+	int id;
+}t[1000005];
+bool cmp1(t1 a,t1 b)
+{
+	return a.c<b.c;
+}
+bool cmp2(int a,int b)
+{
+	if(rk[w-1][a]!=rk[w-1][b])
+	{
+		return rk[w-1][a]<rk[w-1][b];
+	}
+	return rk[w-1][min(a+(1<<(w-1)),n+1)]<rk[w-1][min(b+(1<<(w-1)),n+1)];
+}
+void SA()
+{
+	n=s.size();
+	for(int i=0;i<n;i++)
+	{
+		t[i+1].c=s[i];
+		t[i+1].id=i+1;
+		sa[i+1]=i+1;
+	}
+	sort(t+1,t+n+1,cmp1);
+	int cnt=0;
+	t[0].c=' ';
+	for(int i=1;i<=n;i++)
+	{
+		if(t[i].c!=t[i-1].c)
+		{
+			cnt++;
+		}
+		rk[0][t[i].id]=cnt;
+	}
+	for(w=1;w<=20;w++)
+	{
+		sort(sa+1,sa+n+1,cmp2);
+		cnt=0;
+		for(int j=1;j<=n;j++)
+		{
+			if(rk[w-1][sa[j]]!=rk[w-1][sa[j-1]]||rk[w-1][min(sa[j]+(1<<(w-1)),n+1)]!=rk[w-1][min(sa[j-1]+(1<<(w-1)),n+1)])
+			{
+				cnt++;
+			}
+			rk[w][sa[j]]=cnt;
+		}
+	}
+	memcpy(r,rk[20],sizeof(r));
+	int k=0;
+	for(int i=1;i<=n;i++)
+	{
+		if(r[i]==1)
+		{
+			h[1]=0;
+			k=0;
+			continue;
+		}
+		while(i+k-1<n&&sa[r[i]-1]+k-1<n&&s[i+k-1]==s[sa[r[i]-1]+k-1])
+		{
+			k++;
+		}
+		h[r[i]]=k;
+		if(k)
+		{
+			k--;
+		}
+	}
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>sa</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>source.c++</scope>
+</snippet>

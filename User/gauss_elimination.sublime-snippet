@@ -1,0 +1,55 @@
+<snippet>
+	<content><![CDATA[
+const double eps=1e-8;
+double c[305][305];
+void Gauss(int m,int n)
+{
+	int p=0;
+	for(int i=1;i<=n&&p<m;i++)
+	{
+		for(int j=p+1;j<=m;j++)
+		{
+			if(fabs(c[j][i])>eps)
+			{
+				swap(c[p+1],c[j]);
+				break;
+			}
+		}
+		if(fabs(c[p+1][i])<eps)
+		{
+			continue;
+		}
+		p++;
+		for(int j=1;j<=m;j++)
+		{
+			if(p!=j)
+			{
+				double rate=c[j][i]/c[p][i];
+				for(int k=1;k<=n+1;k++)
+				{
+					c[j][k]-=c[p][k]*rate;
+				}
+			}
+		}
+	}
+	for(int i=1;i<=m;i++)
+	{
+		if(*max_element(c[i]+1,c[i]+n+1)-*min_element(c[i]+1,c[i]+n+1)<eps&&fabs(c[i][n+1])>eps)
+		{
+			cout<<"No Solution"<<endl;
+			return;
+		}
+	}
+	if(p!=n)
+	{
+		cout<<"Multiple solutions"<<endl;
+		return;
+	}
+	${1:}
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>gau</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>source.c++</scope>
+</snippet>

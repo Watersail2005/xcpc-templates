@@ -1,0 +1,22 @@
+<snippet>
+	<content><![CDATA[
+typedef pair<int,int> pii;
+pii exgcd(int a,int b,int &g)
+{
+	if(b==0)
+	{
+		g=a;
+		return {1,0};
+	}
+	else
+	{
+		auto [x,y]=exgcd(b,a%b,g);
+		return {y,x-a/b*y};
+	}
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>exg</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>source.c++</scope>
+</snippet>

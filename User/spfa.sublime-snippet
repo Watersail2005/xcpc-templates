@@ -1,0 +1,45 @@
+<snippet>
+	<content><![CDATA[
+typedef pair<int,int> pii;
+vector<pii>a[2005];
+int d[2005],cnt[2005],n,m;
+bool vis[2005];
+bool spfa(int s)
+{
+	memset(d,0x3f,sizeof(d[0])*(n+1));
+	memset(vis,false,sizeof(vis[0])*(n+1));
+	queue<int>q;
+	d[s]=cnt[s]=0;
+	vis[s]=true;
+	q.push(s);
+	while(q.size())
+	{
+		int u=q.front();
+		q.pop();
+		vis[u]=false;
+		for(auto [v,w]:a[u])
+		{
+			if(d[u]+w<d[v])
+			{
+				d[v]=d[u]+w;
+				cnt[v]=cnt[u]+1;
+				if(cnt[v]>=n)
+				{
+					return true;
+				}
+				if(vis[v]==false)
+				{
+					vis[v]=true;
+					q.push(v);
+				}
+			}
+		}
+	}
+	return false;
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>spfa</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>source.c++</scope>
+</snippet>

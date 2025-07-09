@@ -1,0 +1,76 @@
+<snippet>
+	<content><![CDATA[
+struct t1
+{
+	int l,r;
+	long long v,bj;
+	#define len(x) t[x].r-t[x].l+1
+}t[4000005];
+void build(int p,int l,int r)
+{
+	t[p].l=l;
+	t[p].r=r;
+	t[p].bj=0;
+	if(l==r)
+	{
+		t[p].v=a[l];
+		return;
+	}
+	int mid=(l+r)>>1;
+	build(p*2,l,mid);
+	build(p*2+1,mid+1,r);
+	t[p].v=t[p*2].v+t[p*2+1].v;
+}
+void spread(int p)
+{
+	t[p*2].bj+=t[p].bj;
+	t[p*2+1].bj+=t[p].bj;
+	t[p*2].v+=t[p].bj*(len(p*2));
+	t[p*2+1].v+=t[p].bj*(len(p*2+1));
+	t[p].bj=0;
+}
+void change(int p,int l,int r,int v)
+{
+	if(l<=t[p].l&&r>=t[p].r)
+	{
+		t[p].v+=(len(p))*(long long)v;
+		t[p].bj+=v;
+		return;
+	}
+	spread(p);
+	int mid=(t[p].l+t[p].r)>>1;
+	if(l<=mid)
+	{
+		change(p*2,l,r,v);
+	}
+	if(r>mid)
+	{
+		change(p*2+1,l,r,v);
+	}
+	t[p].v=t[p*2].v+t[p*2+1].v;
+}
+long long ask(int p,int l,int r)
+{
+	if(l<=t[p].l&&r>=t[p].r)
+	{
+		return t[p].v;
+	}
+	spread(p);
+	int mid=(t[p].l+t[p].r)>>1;
+	long long va=0;
+	if(l<=mid)
+	{
+		va+=ask(p*2,l,r);
+	}
+	if(r>mid)
+	{
+		va+=ask(p*2+1,l,r);
+	}
+	return va;
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>seg</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>source.c++</scope>
+</snippet>

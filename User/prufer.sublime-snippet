@@ -1,0 +1,71 @@
+<snippet>
+	<content><![CDATA[
+//带标号无根树的Prufer序列
+//每次选择一个编号最小的叶结点并删掉它，然后在序列中记录下它连接到的那个结点，直至剩下两个结点，其中之一一定为n
+//Cayley公式：完全图有n^(n-2)棵生成树
+vector<int> prufer(vector<int> seq,int opt)
+{
+	int i=0,n=seq.size()+opt;
+	vector<int>d(n+1),fa,p;
+	for(int x:seq)
+	{
+		d[x]++;
+	}
+    if(opt==1)
+    {
+    	fa=seq;
+    	while(p.size()<n-2)
+    	{
+    		i++;
+    		if(d[i]==0)
+    		{
+    			int x=i;
+    			do
+    			{
+    				x=fa[x-1];
+    				p.push_back(x);
+	    			d[x]--;
+	    		}while(p.size()<n-2&&d[x]==0&&x<=i);
+    		}
+    	}
+    	return p;
+    }//父亲序列（n为根）转Prufer序列
+    else
+    {
+    	p=seq;
+    	p.push_back(n);
+    	d[n]++;
+    	reverse(p.begin(),p.end());
+    	fa.resize(n-1);
+    	while(p.size())
+    	{
+    		i++;
+    		if(d[i]==0)
+    		{
+    			int x=i;
+    			while(p.size())
+    			{
+	    			d[p.back()]--;
+	    			fa[x-1]=p.back();
+	    			if(d[p.back()]==0&&p.back()<i)
+	    			{
+	    				x=p.back();
+	    				p.pop_back();
+	    			}
+	    			else
+	    			{
+	    				p.pop_back();
+	    				break;
+	    			}
+    			}
+    		}
+    	}
+    	return fa;
+    }//Prufer序列转父亲序列（n为根）
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>pru</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>source.c++</scope>
+</snippet>

@@ -1,0 +1,142 @@
+<snippet>
+	<content><![CDATA[
+#define l(x) ch[x][0]
+#define r(x) ch[x][1] 
+int fa[100005],ch[100005][2];//ch刻画了所有Splay树边，fa在其基础上额外刻画了部分原树边
+int val[100005],sum[100005],rev[100005];
+int get(int x)
+{
+	return ch[fa[x]][1]==x;
+}
+void maintain(int x)
+{
+	sum[x]=sum[l(x)]^sum[r(x)]^val[x];
+}
+bool root(int x)
+{
+	return ch[fa[x]][0]!=x&&ch[fa[x]][1]!=x;
+}
+void rotate(int x)
+{
+	int y=fa[x],z=fa[y],opt=get(x);
+	fa[x]=z;
+	if(!root(y))
+	{
+		ch[z][y==ch[z][1]]=x;
+	}
+	ch[y][opt]=ch[x][opt^1];
+	if(ch[x][opt^1])
+	{
+		fa[ch[x][opt^1]]=y;
+	}
+	fa[y]=x;
+	ch[x][opt^1]=y;
+	maintain(y);
+	maintain(x);
+}
+void pushdown(int x)
+{
+	if(rev[x])
+	{
+		rev[l(x)]^=1;
+		rev[r(x)]^=1;
+		swap(ch[l(x)][0],ch[l(x)][1]);
+		swap(ch[r(x)][0],ch[r(x)][1]);
+		rev[x]=0;
+	}
+}
+void update(int x)
+{
+	if(!root(x))
+	{
+		update(fa[x]);
+	}
+	pushdown(x);
+}
+void Splay(int x)
+{
+	update(x);
+	while(!root(x))
+	{
+		int y=fa[x],z=fa[y];
+		if(root(y))
+		{
+			rotate(x);
+			break;
+		}
+		if(get(x)==get(y))
+		{
+			rotate(y);
+		}
+		else
+		{
+			rotate(x);
+		}
+		rotate(x);
+	}
+}
+int access(int x)
+{
+	int y=0;
+	while(x)
+	{
+		Splay(x);
+		ch[x][1]=y;
+		maintain(x);
+		y=x;
+		x=fa[x];
+	}
+	return y;
+}//将x与原树根节点的路径上的边设置成实边
+void setroot(int x)
+{
+	access(x);
+	Splay(x);
+	rev[x]^=1;
+	swap(ch[x][0],ch[x][1]);
+}
+int findroot(int x)
+{
+	access(x);
+	Splay(x);
+	while(ch[x][0])
+	{
+		x=ch[x][0];
+	}
+	Splay(x);
+	return x;
+}
+void link(int x,int y)
+{
+	setroot(x);
+	if(findroot(y)==x)
+	{
+		return;
+	}
+	fa[x]=y;
+}
+void cut(int x,int y)
+{
+	setroot(x);
+	if(findroot(y)!=x)
+	{
+		return;
+	}
+	if(fa[y]==x&&!ch[y][0])
+	{
+		ch[x][1]=0;
+		fa[y]=0;
+		maintain(x);
+	}
+}
+int ask(int x,int y)
+{
+	setroot(x);
+	return sum[access(y)];
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>lct</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>source.c++</scope>
+</snippet>

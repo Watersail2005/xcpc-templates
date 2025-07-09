@@ -1,0 +1,71 @@
+<snippet>
+	<content><![CDATA[
+//平面最近点对 
+struct t1
+{
+	double x,y;
+}t[400005],g[400005],h[400005];
+bool cmp1(t1 a,t1 b)
+{
+	return a.x<b.x;
+}
+bool cmp2(t1 a,t1 b)
+{
+	return a.y<b.y;
+}
+double dist(t1 a,t1 b)
+{
+	return sqrt((a.x-b.x)*(a.x-b.x)+(a.y-b.y)*(a.y-b.y));
+}
+double solve(int l,int r)
+{
+	if(l==r)
+	{
+		return 2000000000;
+	}
+	else if(r==l+1)
+	{
+		return dist(t[l],t[r]);
+	}
+	int mid=(l+r)>>1;
+	double minn=min(solve(l,mid),solve(mid,r));
+	int p=0,q=0;
+	for(int i=mid-1;i>=l&&t[i].x>=t[mid].x-minn;i--)
+	{
+		g[mid-i]=t[i];
+		p=mid-i;
+	}
+	for(int i=mid+1;i<=r&&t[i].x<=t[mid].x+minn;i++)
+	{
+		h[i-mid]=t[i];
+		q=i-mid;
+	}
+	sort(g+1,g+p+1,cmp2);
+	sort(h+1,h+q+1,cmp2);
+	int cur=1;
+	for(int i=1;i<=p;i++)
+	{
+		for(int j=cur;j<=q;j++)
+		{
+			if(h[j].y<=g[i].y-minn)
+			{
+				cur++;
+				continue;
+			}
+			if(h[j].y>=g[i].y+minn)
+			{
+				break;
+			}
+			minn=min(minn,dist(g[i],h[j]));
+		}
+	}
+	return minn;
+}
+sort(t+1,t+n+1,cmp1);
+double ans=solve(1,n);
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>npp</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>source.c++</scope>
+</snippet>

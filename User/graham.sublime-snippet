@@ -1,0 +1,64 @@
+<snippet>
+	<content><![CDATA[
+typedef pair<int,int> pii;
+pii p[100005];
+pii operator -(pii a,pii b)
+{
+	return pii(a.first-b.first,a.second-b.second);
+}
+int operator *(pii a,pii b)
+{
+	return a.first*b.second-a.second*b.first;
+}
+double len(pii a)
+{
+	return sqrt(a.first*a.first+a.second*a.second);
+}
+bool cmp(pii a,pii b)
+{
+	a=a-p[1];
+	b=b-p[1];
+	if(a*b!=0)
+	{
+		return a*b>0;
+	}
+	return len(a)<len(b);
+}
+int n,s[100005],tot;
+void Graham()
+{
+	for(int i=1;i<=n;i++)
+	{
+		if(p[i].second<p[1].second||p[i].second==p[1].second&&p[i].first<p[1].first)
+		{
+			swap(p[i],p[1]);
+		}
+	}
+	sort(p+2,p+n+1,cmp);
+	tot=1;
+	s[1]=1;
+	for(int i=2;i<=n;i++)
+	{
+		while(tot>1)
+		{
+			pii a=p[i]-p[s[tot]];
+			pii b=p[s[tot]]-p[s[tot-1]];
+			if(a*b>=0)
+			{
+				tot--;
+			}
+			else
+			{
+				break;
+			}
+		}
+		s[++tot]=i;
+	}
+	s[++tot]=1;
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>gra</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>source.c++</scope>
+</snippet>

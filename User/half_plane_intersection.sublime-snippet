@@ -1,0 +1,72 @@
+<snippet>
+	<content><![CDATA[
+//左半平面交
+struct line
+{
+	pdd st,ed;
+	double angle()
+	{
+		return atan2((ed-st).second,(ed-st).first);
+	}
+};
+pdd jiaodian(line a,line b)
+{
+	return jiaodian(a.st,a.ed,b.st,b.ed);
+}
+int sgn(double x)
+{
+	if(fabs(x)<eps)
+	{
+		return 0;
+	}
+	return x>0?1:-1;
+}
+bool onright(line a,pdd b)
+{
+	return (a.ed-a.st)*(b-a.st)<0;
+}//判断点是否在直线的右侧
+double calc(vector<line> l)
+{
+	auto cmp=[](line a,line b)
+	{
+		if(sgn(a.angle()-b.angle())!=0)
+		{
+	     	return a.angle()<b.angle();
+	    }
+	    return (b.ed-a.st)*(b.st-a.st)>0;
+	};
+	sort(l.begin(),l.end(),cmp);
+	deque<line>q;
+	for(line y:l)
+	{
+		if(!q.empty()&&sgn((y.ed-y.st)*(q.back().ed-q.back().st))==0)
+		{
+			q.pop_back();
+		}
+		while(q.size()>1&&onright(y,jiaodian(q[q.size()-1],q[q.size()-2])))
+		{
+			q.pop_back();
+		}//先排除队尾再排除队首
+		while(q.size()>1&&onright(y,jiaodian(q[0],q[1])))
+		{
+			q.pop_front();
+		}
+		q.push_back(y);
+	}
+	while(q.size()>1&&onright(q[0],jiaodian(q[q.size()-1],q[q.size()-2])))
+	{
+		q.pop_back();
+    }
+	vector<pdd>ans;
+	for(int i=0;i<q.size();i++)
+	{
+		ans.push_back(jiaodian(q[i],q[(i+1)%q.size()]));
+	}
+	return area(ans);
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>hpi</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>source.c++</scope>
+</snippet>

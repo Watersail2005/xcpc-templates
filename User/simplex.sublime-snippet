@@ -1,0 +1,113 @@
+<snippet>
+	<content><![CDATA[
+int n,m;
+long double a[25][45],b[25],c[45],v;
+long double x[45];
+int cur[25];
+const long double eps=1e-10;
+void pivot(int l,int e)
+{
+	x[e]=b[l]/a[l][e];
+	x[cur[l]]=0.0;
+	cur[l]=e;
+	long double rate=a[l][e];
+	for(int i=1;i<=n+m;i++)
+	{
+		a[l][i]/=rate;
+	}
+	b[l]/=rate;
+	for(int i=1;i<=m;i++)
+	{
+		if(i==l)
+		{
+			continue;
+		}
+		if(fabs(a[i][e])>eps)
+		{
+			long double rate=a[i][e];
+			for(int j=1;j<=n+m;j++)
+			{
+				a[i][j]-=a[l][j]*rate;
+			}
+			b[i]-=b[l]*rate;
+			if(cur[i])
+			{
+				x[cur[i]]=b[i]/a[i][cur[i]];
+			}
+		}
+	}
+	rate=c[e];
+	for(int i=1;i<=n+m;i++)
+	{
+		c[i]-=a[l][i]*rate;
+	}
+}
+long double simplex()
+{
+	while(*min_element(b+1,b+m+1)<-eps)
+	{
+		int l=0;
+		for(int i=1;i<=m;i++)
+		{
+			if(b[i]<-eps&&(l==0||cur[i]<cur[l]))
+			{
+				l=i;
+			}
+		}
+		int e=0;
+		for(int i=1;i<=n+m;i++)
+		{
+			if(a[l][i]<-eps)
+			{
+				e=i;
+				break;
+			}
+		}
+		if(e==0)
+		{
+			cout<<"Infeasible"<<endl;
+			exit(0);
+		}
+		v=v+b[l]/a[l][e]*c[e];
+		pivot(l,e);
+	}
+	while(1)
+	{
+		int e=0;
+		for(int i=1;i<=n+m;i++)
+		{
+			if(c[i]>eps)
+			{
+				e=i;
+				break;
+			}
+		}
+		if(e==0)
+		{
+			return v;
+		}
+		int l=0;
+		long double maxn=INT_MAX;
+		for(int i=1;i<=m;i++)
+		{
+			if(a[i][e]>eps&&((b[i]/a[i][e]-maxn<-eps)||fabs(b[i]/a[i][e]-maxn)<eps&&cur[i]<cur[l]))
+			{
+				maxn=b[i]/a[i][e];
+				l=i;
+			}
+		}
+		if(l==0)
+		{
+			cout<<"Unbounded"<<endl;
+			exit(0);
+		}
+		v=v+maxn*c[e];
+		pivot(l,e);
+	}
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>sim</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>source.c++</scope>
+</snippet>

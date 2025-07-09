@@ -1,0 +1,64 @@
+<snippet>
+	<content><![CDATA[
+//可并小根堆 
+int fa[100005];
+bool v[100005];
+struct t1
+{
+	int l,r,v,d;
+}t[100005];
+int get(int x)
+{
+	if(fa[x]==x)
+	{
+		return x;
+	}
+	return fa[x]=get(fa[x]);
+}
+int merge(int x,int y)
+{
+	if(x==0||y==0)
+	{
+		return x+y;
+	}
+	if(t[x].v>t[y].v||t[x].v==t[y].v&&x>y)
+	{
+		swap(x,y);
+	}
+	t[x].r=merge(t[x].r,y);
+	if(t[t[x].l].d<t[t[x].r].d)
+	{
+		swap(t[x].l,t[x].r);
+	}
+	t[x].d=t[t[x].r].d+1;
+	return x;
+}
+if(v[x]==true||v[y]==true||get(x)==get(y))
+{
+	continue;
+}
+x=get(x);
+y=get(y);
+if(t[x].v>t[y].v)
+{
+	swap(x,y);
+}
+merge(x,y);
+fa[y]=x;
+	
+if(v[x]==true)
+{
+	cout<<-1<<endl;
+	continue;
+}
+int f=get(x);
+cout<<t[f].v<<endl;
+v[f]=true;
+fa[f]=merge(t[f].l,t[f].r);
+fa[fa[f]]=fa[f];
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>mh</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>source.c++</scope>
+</snippet>

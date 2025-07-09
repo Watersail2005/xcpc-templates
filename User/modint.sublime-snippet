@@ -1,0 +1,114 @@
+<snippet>
+	<content><![CDATA[
+const int mod=1000000007;
+int power(int n,int p)
+{
+    if(p==0)
+    {
+        return 1;
+    }
+    long long tmp=power(n,p/2);
+    if(p%2==1)
+    {
+        return tmp*tmp%mod*n%mod;
+    }
+    return tmp*tmp%mod;
+}
+struct mint
+{
+    unsigned int x;
+    mint(int o=0)
+    {
+        x=o;
+    }
+    mint operator =(int o)
+    {
+        return x=o,*this;
+    }
+    mint operator +=(mint o)
+    {
+        return x=(x+o.x)%mod,*this;
+    }
+    mint operator -=(mint o)
+    {
+        return x=(x-o.x+mod)%mod,*this;
+    }
+    mint operator *=(mint o)
+    {
+        return x=1ll*x*o.x%mod,*this;
+    }
+    mint operator /=(mint o)
+    {
+        return x=1ll*x*power(o.x,mod-2)%mod,*this;
+    }
+    mint operator &=(mint o)
+    {
+        return x=(x&o.x),*this;
+    }
+    mint operator >>=(mint o)
+    {
+        return x=(x>>o.x),*this;
+    }
+    friend bool operator ==(mint a,mint b)
+    {
+        return a.x==b.x;
+    }
+    friend mint operator +(mint a,mint b)
+    {
+        return a+=b;
+    }
+    friend mint operator -(mint a,mint b)
+    {
+        return a-=b;
+    }
+    friend mint operator *(mint a,mint b)
+    {
+        return a*=b;
+    }
+    friend mint operator /(mint a,mint b)
+    {
+        return a/=b;
+    }
+    friend mint operator &(mint a,mint b)
+    {
+        return a&=b;
+    }
+    friend mint operator >>(mint a,mint b)
+    {
+        return a>>=b;
+    }
+};
+istream& operator >>(istream& is,mint &o)//mint 也要加引用，否则赋值无效
+{
+    is>>o.x;
+    return is;
+}
+ostream& operator <<(ostream& os,mint o)
+{
+    os<<o.x;
+    return os;
+}
+/*
+运算符重载通常有两种方式：成员函数和非成员函数。对于<<运算符来说，通常建议作为非成员函数来重载，
+因为左操作数应该是ostream对象，比如cout，而成员函数的话，左操作数必须是该类的对象，这显然不合适。
+*/
+//C++标准库中的流对象不可拷贝
+mint power(mint n,mint p)
+{
+    if(p==0)
+    {
+        return 1;
+    }
+    mint tmp=power(n,p>>1);
+    if((p&1)==1)
+    {
+        return tmp*tmp*n;
+    }
+    return tmp*tmp;
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>mint</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>source.c++</scope>
+</snippet>

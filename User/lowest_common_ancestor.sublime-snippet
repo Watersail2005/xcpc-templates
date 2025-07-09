@@ -1,0 +1,57 @@
+<snippet>
+	<content><![CDATA[
+void ${1:dfs}(int n1)
+{
+	for(int i=0;i<a[n1].size();i++)
+	{
+		if(a[n1][i]!=f[n1][0])
+		{
+			f[a[n1][i]][0]=n1;
+			d[a[n1][i]]=d[n1]+1;
+			dfs(a[n1][i]);
+		}
+	}
+}
+void pre()
+{
+	for(int j=1;j<=17;j++)
+	{
+		for(int i=1;i<=n;i++)
+		{
+			f[i][j]=f[f[i][j-1]][j-1];
+		}
+	}
+}
+int lca(int u,int v)
+{
+	if(d[u]<d[v])
+	{
+		swap(u,v);
+	}
+	for(int i=17;i>=0;i--)
+	{
+		if(d[v]<=d[f[u][i]])
+		{
+			u=f[u][i];
+		}
+	}
+	if(u==v)
+	{
+		return u;
+	}
+	for(int i=17;i>=0;i--)
+	{
+		if(f[u][i]!=f[v][i])
+		{
+			u=f[u][i];
+			v=f[v][i];
+		}
+	}
+	return f[u][0];
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>lca</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>source.c++</scope>
+</snippet>

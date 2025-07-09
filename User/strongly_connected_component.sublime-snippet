@@ -1,0 +1,45 @@
+<snippet>
+	<content><![CDATA[
+vector<int>a[500005],scc[500005];
+int dfn[500005],low[500005],tot,cnt,id[500005];
+bool ins[500005];
+stack<int>s;
+void tarjan(int n1)
+{
+	dfn[n1]=low[n1]=++tot;
+	s.push(n1);
+	ins[n1]=true;
+	for(int i=0;i<a[n1].size();i++)
+	{
+		if(!dfn[a[n1][i]])
+		{
+			tarjan(a[n1][i]);
+			low[n1]=min(low[n1],low[a[n1][i]]);
+		}
+		else if(ins[a[n1][i]]==true)
+		{
+			low[n1]=min(low[n1],dfn[a[n1][i]]);
+		}
+	}
+	if(dfn[n1]==low[n1])
+	{
+		cnt++;
+		while(s.top()!=n1)
+		{
+			id[s.top()]=cnt;
+			scc[cnt].push_back(s.top());
+			ins[s.top()]=false;
+			s.pop();
+		}
+		id[n1]=cnt;
+		scc[cnt].push_back(n1);
+		ins[n1]=false;
+		s.pop();
+	}
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>scc</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>source.c++</scope>
+</snippet>

@@ -1,0 +1,49 @@
+<snippet>
+	<content><![CDATA[
+int c[1005][1005];
+int det(int l,int r)
+{
+	int res=1;
+	for(int i=l;i<r;i++)
+	{
+		for(int j=i;j<=r;j++)
+		{
+			if(c[j][i]!=0)
+			{
+				if(i!=j)
+				{
+					swap(c[j],c[i]);
+					res=-res;
+				}
+				break;
+			}
+		}
+		for(int j=i+1;j<=r;j++)
+		{
+			while(c[j][i]!=0)
+			{
+				swap(c[j],c[i]);
+				res=-res;
+				int rate=c[j][i]/c[i][i];
+				if(rate!=0)
+				{
+					for(int k=i;k<=r;k++)
+					{
+						c[j][k]=(c[j][k]-c[i][k]*rate%mod)%mod;
+					}
+				}
+			}
+		}
+	}
+	for(int i=l;i<=r;i++)
+	{
+		(res*=c[i][i])%=mod;
+	}
+	return res;
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>det</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>source.c++</scope>
+</snippet>

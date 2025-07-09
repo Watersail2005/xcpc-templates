@@ -1,0 +1,55 @@
+<snippet>
+	<content><![CDATA[
+int v[10000005],prime[10000005],m;
+int miu[10000005],smiu[10000005],d[10000005],sd[10000005];
+void mobius(int n)
+{
+    miu[1]=1;
+    d[1]=1;
+    for(int i=2;i<=n;i++)
+    {
+        if(v[i]==0)
+        {
+            v[i]=i;
+            prime[++m]=i;
+            miu[i]=-1;
+            d[i]=2;
+        }
+        for(int j=1;j<=m;j++)
+        {
+            if(i*prime[j]>n||prime[j]>v[i])
+            {
+                break;
+            }
+            v[i*prime[j]]=prime[j];
+            int x=i,y=prime[j],cnt=1;
+            while(x%prime[j]==0)
+            {
+                x/=prime[j];
+                y*=prime[j];
+                cnt++;
+            }
+            if(x==1)
+            {
+                miu[x*y]=0;
+                d[x*y]=cnt+1;
+            }
+            else
+            {
+                miu[x*y]=miu[x]*miu[y];
+                d[x*y]=d[x]*d[y];
+            }
+        }
+    }
+    for(int i=1;i<=n;i++)
+    {
+        smiu[i]=smiu[i-1]+miu[i];
+        sd[i]=sd[i-1]+d[i];
+    }
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>mob</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>source.c++</scope>
+</snippet>

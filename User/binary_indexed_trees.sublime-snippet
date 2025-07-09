@@ -1,0 +1,31 @@
+<snippet>
+	<content><![CDATA[
+int c[100005];
+int lowbit(int n)
+{
+	return n&(-n);
+}
+void add(int n1,int va)
+{
+	while(n1<=n)
+	{
+		c[n1]+=va;
+		n1+=lowbit(n1);
+	}
+}
+int ask(int n1)
+{
+	int ans=0;
+	while(n1>0)
+	{
+		ans+=c[n1];
+		n1-=lowbit(n1);
+	}
+	return ans;
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>tar</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>source.c++</scope>
+</snippet>

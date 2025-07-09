@@ -1,0 +1,14 @@
+<snippet>
+	<content><![CDATA[
+sort(raw+1,raw+n+1);
+int m=unique(raw+1,raw+n+1)-(raw+1);
+for(int i=1;i<=m;i++)
+{
+	v[raw[i]]=i;
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>lsh</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>source.c++</scope>
+</snippet>

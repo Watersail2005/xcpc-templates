@@ -1,0 +1,26 @@
+<snippet>
+	<content><![CDATA[
+int nx[1000005];
+void kmp(string s)
+{
+	nx[1]=0;
+	for(int i=2;i<=s.size();i++)
+	{
+		int j=nx[i-1];
+		while(j!=0&&s[j]!=s[i-1])
+		{
+			j=nx[j];
+		}
+		nx[i]=j;
+		if(s[j]==s[i-1])
+		{
+			nx[i]++;
+		}
+	}
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>kmp</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>source.c++</scope>
+</snippet>

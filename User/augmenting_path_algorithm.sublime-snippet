@@ -1,0 +1,40 @@
+<snippet>
+	<content><![CDATA[
+vector<int>a[1005];
+int match(int n)
+{
+	vector<int>ma(n+1);
+	vector<bool>vis(n+1);
+	function<bool(int)> dfs=[&](int u)
+	{
+		vis[u]=true;
+		for(int v:a[u])
+		{
+			if(!ma[v]||vis[ma[v]]==false&&dfs(ma[v]))
+			{
+				ma[v]=u;
+				ma[u]=v;
+				return true;
+			}
+		}
+		return false;
+	};
+	int res=0;
+	for(int i=1;i<=n;i++)
+	{
+		if(!ma[i])
+		{
+			res+=dfs(i);
+			vis.assign(n+1,0);
+		}
+	}
+	return res;
+}
+//二分图最小点覆盖包含的点数等于二分图最大匹配包含的边数
+//二分图的最大独立集的大小等于n减去最大匹配数
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>apa</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>source.c++</scope>
+</snippet>

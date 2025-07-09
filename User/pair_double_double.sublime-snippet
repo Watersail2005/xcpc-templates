@@ -1,0 +1,61 @@
+<snippet>
+	<content><![CDATA[
+#define iszero(x) fabs(x)<eps
+const double eps=1e-10;
+typedef pair<double,double> pdd;
+pdd operator +(pdd a,pdd b)
+{
+	return {a.first+b.first,a.second+b.second};
+}
+pdd operator -(pdd a,pdd b)
+{
+	return {a.first-b.first,a.second-b.second};
+}
+pdd operator *(double a,pdd b)
+{
+	return {a*b.first,a*b.second};
+}
+double operator ^(pdd a,pdd b)
+{
+	return a.first*b.first+a.second*b.second;
+}
+double operator *(pdd a,pdd b)
+{
+	return a.first*b.second-a.second*b.first;
+}
+int parallel(pdd a,pdd b,pdd c,pdd d)
+{
+    if(iszero((b-a)*(d-c)))
+    {
+        if(iszero((b-a)*(c-a)))
+        {
+            return 2;
+        }
+        return 0;
+    }
+    return 1;
+}
+pdd jiaodian(pdd a,pdd b,pdd c,pdd d)
+{
+	pdd l1=b-a,l2=d-c;
+	return c+((c-a)*l1)/(l1*l2)*l2;
+}
+double area(vector<pdd>polygon)
+{
+	if(polygon.size()<3)
+	{
+		return 0;
+	}
+	double res=0;
+	for(int i=0;i<polygon.size();i++)
+	{
+		res=res+polygon[i]*polygon[(i+1)%polygon.size()];
+	}
+	return 0.5*fabs(res);
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>pdd</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>source.c++</scope>
+</snippet>

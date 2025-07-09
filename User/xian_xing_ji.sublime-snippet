@@ -1,0 +1,47 @@
+<snippet>
+	<content><![CDATA[
+//前缀异或线性基
+class LinearBasis
+{
+	static const int K=5;
+	array<int,K>a,t;
+	public:
+		LinearBasis()
+		{
+			a.fill(0);
+			t.fill(0);
+		}
+		void insert(int x,int i)
+		{
+			for(int k=K-1;k>=0;k--)
+			{
+				if((x>>k)&1)
+				{
+					if(i>t[k])
+					{
+						swap(a[k],x);
+						swap(t[k],i);
+					}
+					x^=a[k];
+				}
+			}
+		}
+		int ask(int i)
+		{
+			int res=0;
+			for(int k=K-1;k>=0;k--)
+			{
+				res+=(t[k]>=i);
+			}
+			return res;
+		}
+};
+//查询原集合内任意几个元素 xor 的最大值，只需将线性基从高位向低位扫，
+//若 xor 上当前扫到的 a_x 答案变大，就把答案异或上 a_x
+//查询原集合内任意几个元素 xor 的最小值，就是线性基集合所有元素中最小的那个
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>xxj</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>source.c++</scope>
+</snippet>

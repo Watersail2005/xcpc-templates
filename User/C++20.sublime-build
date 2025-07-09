@@ -1,0 +1,11 @@
+{
+    "cmd": ["g++.exe", "-std=c++2a", "-O2", "-Wall", "-Wextra", "-Wshadow", "-Wformat=2", "-Wfloat-equal", "-Wconversion", "-Wlogical-op", "-Wcast-qual", "-Wcast-align", "-Wno-unused-parameter",  "-D_GLIBCXX_DEBUG", "-D_GLIBCXX_DEBUG_PEDANTIC", "${file}", "-o", "${file_base_name}.exe"],
+    "working_dir": "$file_path",
+    "selector": "source.cpp",
+    "variants": [
+        {
+            "name": "Run From CMD",
+            "shell_cmd": "g++ -std=c++2a -O2 -Wall -Wextra -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -Wlogical-op -Wcast-qual -Wcast-align -Wno-unused-parameter -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC \"$file\" -o \"$file_base_name\" && start cmd /c \"\"${file_path}/${file_base_name}\" & pause\""
+        }
+    ]
+}
