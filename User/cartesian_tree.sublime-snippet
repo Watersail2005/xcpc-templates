@@ -1,0 +1,31 @@
+<snippet>
+	<content><![CDATA[
+int l[10000005],r[10000005],p[10000005];
+int s[10000005],tot;
+void build()
+{
+	for(int i=1;i<=n;i++)
+	{
+		while(p[i]<=p[s[tot]])
+		{
+			tot--;
+		}
+		//维护右链
+		if(tot!=0)
+		{
+			l[i]=r[s[tot]]; 
+			r[s[tot]]=i;
+		}
+		else
+		{
+			l[i]=s[1];//避免0的干扰 
+		}
+		s[++tot]=i;
+	}
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>dke</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>source.c++</scope>
+</snippet>

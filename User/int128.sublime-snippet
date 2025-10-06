@@ -1,0 +1,29 @@
+<snippet>
+	<content><![CDATA[
+istream& operator >>(istream& is,__int128_t &o)
+{
+	long long x;
+    is>>x;
+    o=x;
+    return is;
+}
+ostream& operator <<(ostream& os,__int128_t o)
+{
+    if(o<0)
+    {
+    	os<<'-';
+    	o=-o;
+    }
+	if(o>9)
+	{
+		os<<(o/10);
+	}
+	os<<char(o%10+'0');
+	return os;
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>i128</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>source.c++</scope>
+</snippet>

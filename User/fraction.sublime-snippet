@@ -89,6 +89,11 @@ frac max(frac x,frac y)
 {
 	return x>y?x:y;
 }
+ostream& operator <<(ostream& os,frac o)
+{
+	os<<o.num<<'/'<<o.den;
+	return os;
+}
 ]]></content>
 	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
 	<tabTrigger>fra</tabTrigger>

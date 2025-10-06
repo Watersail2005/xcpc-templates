@@ -23,6 +23,10 @@ double operator *(pdd a,pdd b)
 {
 	return a.first*b.second-a.second*b.first;
 }
+double angle(pdd a,pdd b)
+{
+	return atan2(a*b,a^b);
+}
 int parallel(pdd a,pdd b,pdd c,pdd d)
 {
     if(iszero((b-a)*(d-c)))

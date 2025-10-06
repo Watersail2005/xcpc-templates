@@ -1,0 +1,42 @@
+<snippet>
+	<content><![CDATA[
+typedef pair<int,int> pii;
+vector<pii>a[5005];
+int d[5005],n;
+bool vis[5005];
+int prim(int s)
+{
+	memset(d,0x3f,sizeof(d[0])*(n+1));
+	memset(vis,0,sizeof(vis[0])*(n+1));
+	d[s]=0;
+	for(int i=1;i<n;i++)
+	{
+		int u=0;
+		for(int j=1;j<=n;j++)
+		{
+			if(!vis[j]&&(u==0||d[j]<d[u]))
+			{
+				u=j;
+			}
+		}
+		if(u==0)
+		{
+			break;
+		}
+		vis[u]=true;
+		for(auto [v,w]:a[u])
+		{
+			if(!vis[v]&&w<d[v])
+			{
+				d[v]=w;
+			}
+		}
+	}
+	return accumulate(d+1,d+n+1,0ll);
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>mst</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>source.c++</scope>
+</snippet>

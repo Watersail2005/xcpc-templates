@@ -1,0 +1,21 @@
+<snippet>
+	<content><![CDATA[
+int l,r;
+while(l<r)
+{
+	int lmid=(l+r)>>1,rmid=lmid+1;
+	if(f(lmid)<=f(rmid))
+	{
+		r=rmid-1;
+	}
+	else
+	{
+		l=lmid+1;
+	}
+}//单谷函数
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>ts</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>source.c++</scope>
+</snippet>

@@ -1,0 +1,30 @@
+<snippet>
+	<content><![CDATA[
+int msr(string s)
+{
+	int n=s.size();
+	int i=0,j=1,k=0;
+	while(i<n&&j<n&&k<n)
+	{
+		if(s[(i+k)%n]==s[(j+k)%n])
+		{
+			k++;
+		}
+		else
+		{
+			s[(i+k)%n]>s[(j+k)%n]? i=i+k+1:j=j+k+1;
+			k=0;
+			if(i==j)
+			{
+				i++;
+			}
+		}
+	}
+	return min(i,j);
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>msr</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>source.c++</scope>
+</snippet>

@@ -3,7 +3,7 @@
 //前缀异或线性基
 class LinearBasis
 {
-	static const int K=5;
+	static const int K=60;
 	array<int,K>a,t;
 	public:
 		LinearBasis()
@@ -11,10 +11,14 @@ class LinearBasis
 			a.fill(0);
 			t.fill(0);
 		}
-		void insert(int x,int i)
+		void insert(int x,int i=1)
 		{
 			for(int k=K-1;k>=0;k--)
 			{
+				if(x==0)
+				{
+					break;
+				}
 				if((x>>k)&1)
 				{
 					if(i>t[k])
@@ -26,16 +30,21 @@ class LinearBasis
 				}
 			}
 		}
-		int ask(int i)
+		int ask(int i=1)
 		{
 			int res=0;
 			for(int k=K-1;k>=0;k--)
 			{
-				res+=(t[k]>=i);
+				if(t[k]>=i&&(res^a[k])>res)
+				{
+       				res^=a[k];
+      			}
 			}
 			return res;
 		}
 };
+//前缀线性基允许对于序列的每个前缀，都维护该前缀的所有后缀的线性基，
+//这样就可以支持查询每个区间的线性基。
 //查询原集合内任意几个元素 xor 的最大值，只需将线性基从高位向低位扫，
 //若 xor 上当前扫到的 a_x 答案变大，就把答案异或上 a_x
 //查询原集合内任意几个元素 xor 的最小值，就是线性基集合所有元素中最小的那个
