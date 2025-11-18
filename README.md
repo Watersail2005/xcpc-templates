@@ -7,6 +7,10 @@
 | cut_vertex | 无向图的割点 |
 | cycle_tree | 基环树 |
 | dinic | 网络最大流 |
+| enumerate_subsets | 枚举子集 |
+| fwtand | 下标与运算卷积 |
+| fwtor | 下标或运算卷积 |
+| fwtxor | 下标异或运算卷积 |
 | graham | 二维凸包 |
 | lowest_common_ancestor | 树上倍增法求最近公共祖先 |
 | manacher | 中心对称结构的马拉车算法 |
