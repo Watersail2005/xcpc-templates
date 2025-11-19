@@ -17,6 +17,7 @@
 | miller_rabin | miller_rabin质数判定 |
 | nearest_point_pair | 平面最近点对 |
 | pair_double_double | 计算几何基础 |
+| plug_dp | 轮廓线DP |
 | pollard_rho | pollard_rho 求合数的一个非平凡因子 |
 | strongly_connected_component | 有向图的强连通分量 |
 | v-dcc | 无向图的点双连通分量 |
