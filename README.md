@@ -7,6 +7,7 @@
 | cut_vertex | 无向图的割点 |
 | cycle_tree | 基环树 |
 | dinic | 网络最大流 |
+| dynamic_segment_tree | 动态开点线段树/线段树合并分裂 |
 | enumerate_subsets | 枚举子集 |
 | fwtand | 下标与运算卷积 |
 | fwtor | 下标或运算卷积 |
