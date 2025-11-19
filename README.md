@@ -21,6 +21,7 @@
 | policy_based_data_structures | 平板电视（带排名的set） |
 | pollard_rho | pollard_rho 求合数的一个非平凡因子 |
 | popcount_increase | 按popcount递增的顺序枚举 |
+| segment_tree | 线段树 |
 | splay | Splay树 |
 | strongly_connected_component | 有向图的强连通分量 |
 | suffix_array | 后缀数组和最长公共前缀 |
