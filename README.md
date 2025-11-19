@@ -18,9 +18,12 @@
 | nearest_point_pair | 平面最近点对 |
 | pair_double_double | 计算几何基础 |
 | plug_dp | 轮廓线DP |
+| policy_based_data_structures | 平板电视（带排名的set） |
 | pollard_rho | pollard_rho 求合数的一个非平凡因子 |
 | splay | Splay树 |
 | strongly_connected_component | 有向图的强连通分量 |
+| suffix_array | 后缀数组和最长公共前缀 |
+| suffix_automaton | 后缀自动机 |
 | tree_hash | 树哈希 |
 | v-dcc | 无向图的点双连通分量 |
 | zu_he_shu | 预处理阶乘及其逆元 |
