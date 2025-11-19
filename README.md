@@ -21,3 +21,4 @@
 | pollard_rho | pollard_rho 求合数的一个非平凡因子 |
 | strongly_connected_component | 有向图的强连通分量 |
 | v-dcc | 无向图的点双连通分量 |
+| zu_he_shu | 预处理阶乘及其逆元 |
