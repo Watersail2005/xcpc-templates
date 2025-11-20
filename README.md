@@ -14,6 +14,8 @@
 | fwtor | 下标或运算卷积 |
 | fwtxor | 下标异或运算卷积 |
 | graham | 二维凸包 |
+| heavy_path_decomposition | 轻重链剖分 |
+| kmp | KMP字符串匹配 |
 | lowest_common_ancestor | 树上倍增法求最近公共祖先 |
 | manacher | 中心对称结构的马拉车算法 |
 | miller_rabin | miller_rabin质数判定 |
