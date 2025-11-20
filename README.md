@@ -14,6 +14,7 @@
 | fwtor | 下标或运算卷积 |
 | fwtxor | 下标异或运算卷积 |
 | gauss_elimination | 高斯消元 |
+| get | 并查集 |
 | graham | 二维凸包 |
 | heavy_path_decomposition | 轻重链剖分 |
 | kmp | KMP字符串匹配 |
