@@ -16,12 +16,14 @@
 | lowest_common_ancestor | 树上倍增法求最近公共祖先 |
 | manacher | 中心对称结构的马拉车算法 |
 | miller_rabin | miller_rabin质数判定 |
+| mobius | 线性筛积性函数 |
 | nearest_point_pair | 平面最近点对 |
 | pair_double_double | 计算几何基础 |
 | plug_dp | 轮廓线DP |
 | policy_based_data_structures | 平板电视（带排名的set） |
 | pollard_rho | pollard_rho 求合数的一个非平凡因子 |
 | popcount_increase | 按popcount递增的顺序枚举 |
+| primes | 线性筛素数 |
 | segment_tree | 线段树 |
 | splay | Splay树 |
 | strongly_connected_component | 有向图的强连通分量 |
