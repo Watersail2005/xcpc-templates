@@ -27,6 +27,7 @@
 | strongly_connected_component | 有向图的强连通分量 |
 | suffix_array | 后缀数组和最长公共前缀 |
 | suffix_automaton | 后缀自动机 |
+| tarjan | tarjan离线（近似）线性求LCA |
 | tree_hash | 树哈希 |
 | v-dcc | 无向图的点双连通分量 |
 | zu_he_shu | 预处理阶乘及其逆元 |
