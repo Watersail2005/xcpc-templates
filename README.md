@@ -20,6 +20,8 @@
 | mobius | 线性筛积性函数 |
 | nearest_point_pair | 平面最近点对 |
 | pair_double_double | 计算几何基础 |
+| persistent_segment_tree | 可持久化线段树 |
+| persistent_trie | 可持久化01Trie |
 | plug_dp | 轮廓线DP |
 | policy_based_data_structures | 平板电视（带排名的set） |
 | pollard_rho | pollard_rho 求合数的一个非平凡因子 |
