@@ -1,6 +1,7 @@
 | 文件名 | 描述 |
 |-------|-------|
 | ac_automaton | AC自动机 |
+| augmenting_path_algorithm | 二分图最大匹配 |
 | cartesian_tree | 笛卡尔树的构建 |
 | chinese_remainder_theorem | 扩展中国剩余定理 |
 | cut_edge | 无向图的割边 |
